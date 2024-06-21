@@ -1,0 +1,6 @@
+1) Host the app on Horoku
+2) Add payment feature to the app
+3) Apply some security touches on the app
+    a) Use helmet for adding headers
+    b) Implement rate-limiting
+    c) Use csurf for CSRF protection
