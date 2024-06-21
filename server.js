@@ -60,6 +60,13 @@ app.use(mongoSanitize());
 
 app.use(express.urlencoded({ extended: true }));
 
+// Checkout webhook
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  webhookCheckout
+);
+
 app.use(
   express.json({
     verify: (req, res, buf) => {
@@ -72,13 +79,6 @@ app.use(
 );
 
 app.options("*", cors());
-
-// Checkout webhook
-app.post(
-  "/webhook-checkout",
-  express.raw({ type: "application/json" }),
-  webhookCheckout
-);
 
 //router mount
 mountRoutes(app);
