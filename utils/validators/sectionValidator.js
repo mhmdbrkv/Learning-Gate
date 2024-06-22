@@ -21,6 +21,18 @@ exports.addSectionValidator = [
       }
       return true;
     }),
+  check("sectionName")
+    .notEmpty()
+    .withMessage("sectionName required")
+    .custom(async (value, { req }) => {
+      const section = await Section.findOne({
+        sectionName: value,
+      });
+      if (section) {
+        throw new Error("There is a section with the same name");
+      }
+      return true;
+    }),
   validatorMiddleware,
 ];
 

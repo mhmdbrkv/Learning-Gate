@@ -1,5 +1,4 @@
 const express = require("express");
-const upload = require("multer")();
 const csrfProtection = require("../utils/csrfToken");
 
 const {
@@ -31,12 +30,9 @@ router.use(
   authServices.allowedTo("instructor")
 );
 
-router.post("/:courseId", csrfProtection, addSectionValidator, addSection);
-
 router.post(
   "/:sectionId/add-lecture",
   csrfProtection,
-  upload.any(),
   addlectureValidator,
   uploadVideo.single("lecture"),
   uploadOnCloudinary("lectures"),
@@ -48,5 +44,7 @@ router.delete(
   removelectureValidator,
   removeLecture
 );
+
+router.post("/:courseId", csrfProtection, addSectionValidator, addSection);
 
 module.exports = router;
