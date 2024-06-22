@@ -62,15 +62,20 @@ exports.login = asyncHandler(async (req, res, next) => {
 exports.protect = asyncHandler(async (req, res, next) => {
   // 1) check if token exists in request header
   let Token;
-  if (req.cookies.token) {
+
+  if (req.cookies && req.cookies.token) {
     Token = req.cookies.token;
   } else if (
+    req.headers &&
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization.startsWith("Bearer ")
   ) {
     Token = req.headers.authorization.split(" ")[1];
-  } else if (req.body.token) {
+  } else if (req.body && req.body.token) {
     Token = req.body.token;
+  } else {
+    // Handle the case where no token is found
+    Token = null;
   }
 
   if (!Token)
