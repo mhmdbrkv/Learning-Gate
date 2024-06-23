@@ -61,6 +61,20 @@ exports.addlectureValidator = [
 
       return true;
     }),
+
+  check("name")
+    .notEmpty()
+    .withMessage("lecture name required")
+    .custom(async (value, { req }) => {
+      const section = await Section.findById(req.params.sectionId);
+      section.lectures.forEach((item) => {
+        if (item.name === value) {
+          throw new Error("There is a lecture with the same name");
+        }
+      });
+
+      return true;
+    }),
   validatorMiddleware,
 ];
 

@@ -33,8 +33,8 @@ router.use(
 router.post(
   "/:sectionId/add-lecture",
   csrfProtection,
-  addlectureValidator,
   uploadVideo.single("lecture"),
+  addlectureValidator,
   uploadOnCloudinary("lectures"),
   addLecture
 );

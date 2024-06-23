@@ -74,7 +74,7 @@ app.use(
         req.rawBody = buf.toString();
       }
     },
-    limit: "20kb",
+    limit: "100kb",
   })
 );
 

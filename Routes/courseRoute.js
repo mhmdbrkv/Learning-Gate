@@ -1,5 +1,4 @@
 const express = require("express");
-const upload = require("multer")();
 const csrfProtection = require("../utils/csrfToken");
 
 const {
@@ -47,10 +46,9 @@ router.use(
 router.post(
   "/create-course",
   csrfProtection,
-  upload.any(),
+  uploadImage.single("thumbnail"),
   postFilter,
   createCousreValidator,
-  uploadImage.single("thumbnail"),
   uploadOnCloudinary("courses"),
   createCourse
 );

@@ -19,5 +19,13 @@ const vidFilter = function (req, file, cb) {
   }
 };
 
-exports.uploadImage = multer({ storage: multerStorage, fileFilter: imgFilter });
-exports.uploadVideo = multer({ storage: multerStorage, fileFilter: vidFilter });
+exports.uploadImage = multer({
+  storage: multerStorage,
+  fileFilter: imgFilter,
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+exports.uploadVideo = multer({
+  storage: multerStorage,
+  fileFilter: vidFilter,
+  limits: { fileSize: 50 * 1024 * 1024 },
+});
