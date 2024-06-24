@@ -1,4 +1,3 @@
-const otpGenerator = require("otp-generator");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -7,49 +6,7 @@ const ApiError = require("../utils/apiError");
 const generateToken = require("../utils/generateToken");
 const sendEmail = require("../utils/sendEmail");
 const { sanitizeUser } = require("../utils/sanitizeData");
-const OTP = require("../Models/OTP");
 const User = require("../Models/userModel");
-
-exports.sendotp = async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    const checkUserPresent = await User.findOne({ email });
-
-    if (checkUserPresent) {
-      return res.status(401).json({
-        success: false,
-        message: `User is Already Registered`,
-      });
-    }
-
-    let otp = otpGenerator.generate(6, {
-      upperCaseAlphabets: false,
-      lowerCaseAlphabets: false,
-      specialChars: false,
-    });
-    const result = await OTP.findOne({ otp: otp });
-    console.log("Result is Generate OTP Func");
-    console.log("OTP", otp);
-    console.log("Result", result);
-    while (result) {
-      otp = otpGenerator.generate(6, {
-        upperCaseAlphabets: false,
-      });
-    }
-    const otpPayload = { email, otp };
-    const otpBody = await OTP.create(otpPayload);
-    console.log("OTP Body", otpBody);
-    res.status(200).json({
-      success: true,
-      message: `OTP Sent Successfully`,
-      otp,
-    });
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).json({ success: false, error: error.message });
-  }
-};
 
 // @desc    createUser
 // @route   POST /api/v1/auth/create-user
@@ -65,7 +22,6 @@ exports.createUser = asyncHandler(async (req, res, next) => {
     biography: req.body.biography,
     social: req.body.social,
     role: req.body.role,
-    otp: req.body.otp,
   });
 
   // Sanitizer function to return only nessesary data
