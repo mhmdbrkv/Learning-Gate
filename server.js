@@ -29,7 +29,7 @@ const limiter = rateLimit({
 
 // Configure CORS with specific options
 const corsOptions = {
-  // origin: "https://yourfrontend.com", // Allow a single origin
+  origin: "http://localhost:3000/", // Allow a single origin
   credentials: true, // Allow cookies and HTTP authentication
 };
 
