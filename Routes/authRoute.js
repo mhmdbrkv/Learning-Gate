@@ -9,6 +9,7 @@ const {
 } = require("../utils/validators/authValidator");
 
 const {
+  sendotp,
   createUser,
   login,
   forgotPassword,
@@ -22,6 +23,8 @@ const router = express.Router();
 router.get("/csrf-token", csrfProtection, (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
+
+router.post("/sendotp", sendotp);
 
 router.post("/create-user", upload.any(), createUserValidator, createUser);
 router.post("/login", loginValidator, login);
