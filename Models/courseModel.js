@@ -125,7 +125,7 @@ cousreSchema.virtual("sections", {
 cousreSchema.pre(/^find/, function (next) {
   this.populate({
     path: "category instructor",
-    select: "name firstname profileImage",
+    select: "name firstname lastname profileImage",
   });
   next();
 });
