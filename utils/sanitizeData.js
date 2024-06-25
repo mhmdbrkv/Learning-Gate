@@ -3,6 +3,7 @@ exports.sanitizeUser = function (user) {
     _id: user._id,
     userName: user.firstname,
     email: user.email,
+    profileImage: user.profileImage,
     role: user.role,
   };
 };
