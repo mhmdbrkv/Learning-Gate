@@ -214,10 +214,11 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   await user.save();
 
   //generate the jwt
-  generateToken(user, res);
+  const token = generateToken(user, res);
 
   res.status(200).json({
     status: true,
     message: "Password has been reseted.",
+    token,
   });
 });
