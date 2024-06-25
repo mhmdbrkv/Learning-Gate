@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.use(authServices.protect, authServices.allowedTo("instructor"));
 
-const { getMyCourses } = require("../services/instructorService");
+const { getMyCourses, getMe } = require("../services/instructorService");
 
 router.get("/my-courses", getMyCourses);
+router.get("/:id", getMe);
 module.exports = router;

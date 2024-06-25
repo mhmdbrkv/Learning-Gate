@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 // eslint-disable-next-line import/no-unresolved
 const Course = require("../Models/courseModel");
+const User = require("../Models/userModel");
+const ApiError = require("../utils/apiError");
 
 // @desc    Get instructor courses
 // @route   GET /api/v1/instructor/my-courses
@@ -13,5 +15,21 @@ exports.getMyCourses = asyncHandler(async (req, res, next) => {
     status: true,
     results: courses.length,
     data: courses,
+  });
+});
+
+// @desc    Get instructor courses
+// @route   GET /api/v1/instructor/:id
+// @access  Protected/instructor
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return new ApiError("No Instructor found", 204);
+  }
+
+  res.status(200).json({
+    status: true,
+    data: user,
   });
 });
