@@ -58,7 +58,9 @@ exports.addLecture = asyncHandler(async (req, res, next) => {
           public_id: req.result.public_id,
         },
       },
+      numOfLectures: { $inc: 1 },
     },
+
     { new: true }
   );
 

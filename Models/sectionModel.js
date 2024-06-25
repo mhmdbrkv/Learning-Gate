@@ -22,6 +22,11 @@ const sectionSchema = new mongoose.Schema({
     require: [true, "section's name required"],
   },
   lectures: [lectureSchema],
+
+  numOfLectures: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("Section", sectionSchema);
