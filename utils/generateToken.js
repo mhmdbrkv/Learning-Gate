@@ -7,7 +7,7 @@ const generateToken = (user, res) => {
 
   res.cookie("token", token, {
     maxAge: 29 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
+    // httpOnly: true,
     secure: true,
     sameSite: "Strict",
   });
