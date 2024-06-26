@@ -45,7 +45,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
 
   //generate the jwt
-  const token = generateToken(user, res);
+  const token = generateToken(user);
 
   // Sanitizer function to return only nessesary data
   const data = sanitizeUser(user);
@@ -214,7 +214,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   await user.save();
 
   //generate the jwt
-  const token = generateToken(user, res);
+  const token = generateToken(user);
 
   res.status(200).json({
     status: true,
