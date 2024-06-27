@@ -14,8 +14,8 @@ const {
   removeFromMyLearning,
 } = require("../services/learningService");
 
-router.use(protect, allowedTo("student"));
 router.get("/", getMyLearning);
+router.use(protect, allowedTo("student"));
 router.post("/:courseId", myLearningValidator, addMyLearning);
 router.delete("/:courseId", myLearningValidator, removeFromMyLearning);
 
