@@ -1,11 +1,8 @@
 const express = require("express");
-const csrfProtection = require("../utils/csrfToken");
 
 const authServices = require("../services/authService");
 
 const router = express.Router();
-
-router.use(authServices.protect, authServices.allowedTo("student"));
 
 const {
   myLearningValidator,
@@ -17,8 +14,9 @@ const {
   removeFromMyLearning,
 } = require("../services/learningService");
 
+router.use(authServices.protect, authServices.allowedTo("student"));
 router.get("/", getMyLearning);
-router.post("/:courseId", csrfProtection, myLearningValidator, addMyLearning);
+router.post("/:courseId", myLearningValidator, addMyLearning);
 router.delete("/:courseId", myLearningValidator, removeFromMyLearning);
 
 module.exports = router;

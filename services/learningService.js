@@ -2,11 +2,15 @@ const asyncHandler = require("express-async-handler");
 const User = require("../Models/userModel");
 const Course = require("../Models/courseModel");
 
-// @desc    Get logged iser wishlist
-// @route   GET /api/v1/wishlist
+// @desc    Get logged user learning
+// @route   GET /api/v1/learning
 // @access  Protected/student
 exports.getMyLearning = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user._id).populate("myLearning");
+
+  if (!user) {
+    throw new Error("No user found");
+  }
 
   res.status(200).json({
     status: true,
