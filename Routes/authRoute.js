@@ -1,5 +1,4 @@
 const express = require("express");
-const upload = require("multer")();
 
 const csrfProtection = require("../utils/csrfToken");
 
@@ -23,7 +22,7 @@ router.get("/csrf-token", csrfProtection, (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
 
-router.post("/create-user", upload.any(), createUserValidator, createUser);
+router.post("/create-user", createUserValidator, createUser);
 router.post("/login", loginValidator, login);
 
 router.post("/forgot-password", csrfProtection, forgotPassword);
