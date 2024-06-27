@@ -1,6 +1,6 @@
 const express = require("express");
 
-const authServices = require("../services/authService");
+const { protect, allowedTo } = require("../services/authService");
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ const {
   removeFromMyLearning,
 } = require("../services/learningService");
 
-router.use(authServices.protect, authServices.allowedTo("student"));
+router.use(protect, allowedTo("student"));
 router.get("/", getMyLearning);
 router.post("/:courseId", myLearningValidator, addMyLearning);
 router.delete("/:courseId", myLearningValidator, removeFromMyLearning);

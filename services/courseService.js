@@ -55,6 +55,34 @@ exports.getPopularCourses = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc    Get courses by interests
+// @route   GET /api/v1/users/interests
+// @access  Public
+exports.getCoursesByInterests = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  const newInterests = [];
+
+  user.interests.forEach((item) => {
+    newInterests.push(new RegExp(item, "i"));
+  });
+
+  const courses = await Course.find({
+    $or: [
+      { title: { $in: newInterests } },
+      { subtitle: { $in: newInterests } },
+    ],
+  }).select(
+    "-description -duration -subCategories -learningGoals -languages -requirements -sideMeta"
+  );
+
+  res.status(200).json({
+    status: true,
+    result: courses.length,
+    data: courses,
+  });
+});
+
 // @desc    Set Thumbnail
 // @route   POST  /api/v1/courses/:courseId
 // @access  Private/Instructor
@@ -117,32 +145,4 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
   await Course.deleteOne({ _id: req.params.id });
 
   res.status(204).send();
-});
-
-// @desc    Get courses by interests
-// @route   GET /api/v1/users/interests
-// @access  Public
-exports.getCoursesByInterests = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-
-  const newInterests = [];
-
-  user.interests.forEach((item) => {
-    newInterests.push(new RegExp(item, "i"));
-  });
-
-  const courses = await Course.find({
-    $or: [
-      { title: { $in: newInterests } },
-      { subtitle: { $in: newInterests } },
-    ],
-  }).select(
-    "-description -duration -subCategories -learningGoals -languages -requirements -sideMeta"
-  );
-
-  res.status(200).json({
-    status: true,
-    result: courses.length,
-    data: courses,
-  });
 });

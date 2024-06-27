@@ -32,9 +32,9 @@ router.use(authServices.isActive);
 
 router.get("/get-me", getUser);
 
-router.use(csrfProtection);
-
 router.post("/interests", addToInterests);
+
+router.use(csrfProtection);
 
 router.post(
   "/my-profile-image",
