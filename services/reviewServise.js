@@ -52,9 +52,14 @@ exports.getReviews = handler.gettAll(Review, "Review");
 // @access  Public
 exports.getRandomReviews = asyncHandler(async (req, res) => {
   const numOfDocument = await Review.countDocuments();
-  const reviews = await Review.aggregate([
+  const randomReviews = await Review.aggregate([
     { $sample: { size: numOfDocument } },
   ]);
+
+  const reviews = await Review.populate(randomReviews, {
+    path: "user",
+    select: "firstname lastname profileImage",
+  });
 
   res.status(201).json({ status: true, data: reviews });
 });

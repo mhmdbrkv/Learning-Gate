@@ -12,6 +12,7 @@ const {
   createCourse,
   setThumbnail,
   getCourses,
+  getRandomCourses,
   getCourse,
   getPopularCourses,
   deleteCourse,
@@ -32,6 +33,7 @@ const router = express.Router({ mergeParams: true });
 router.use("/:courseId/reviews", reviewRoute);
 
 router.get("/", getFilter, getCourses);
+router.get("/random", getFilter, getRandomCourses);
 router.get("/popular", getPopularCourses);
 router.get("/interests", getCoursesByInterests);
 

@@ -34,6 +34,22 @@ exports.getFilter = async (req, res, next) => {
 // @access  Public
 exports.getCourses = handler.gettAll(Course, "Course");
 
+// @desc    Get list of courses
+// @route   GET /api/v1/courses
+// @access  Public
+exports.getRandomCourses = asyncHandler(async (req, res) => {
+  const numOfDocument = await Course.countDocuments();
+  const randomCourses = await Course.aggregate([
+    { $sample: { size: numOfDocument } },
+  ]);
+
+  const courses = await Course.populate(randomCourses, [
+    { path: "category", select: "name" },
+    { path: "instructor", select: "firstname lastname profileImage" },
+  ]);
+
+  res.status(201).json({ status: true, data: courses });
+});
 // @desc    Get specific course by id
 // @route   GET /api/v1/courses/:id
 // @access  Public

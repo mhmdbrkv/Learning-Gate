@@ -129,13 +129,16 @@ cousreSchema.virtual("sections", {
 
 // mongoose query middleware for population
 cousreSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "category",
-    select: "name",
-  }).populate({
-    path: "instructor",
-    select: "firstname lastname profileImage",
-  });
+  this.populate([
+    {
+      path: "category",
+      select: "name",
+    },
+    {
+      path: "instructor",
+      select: "firstname lastname profileImage",
+    },
+  ]);
   next();
 });
 
