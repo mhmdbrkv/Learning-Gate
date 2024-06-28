@@ -45,7 +45,7 @@ exports.filter = (req, res, next) => {
 // @desc    Get list of reviews
 // @route   GET /api/v1/reviews
 // @access  Public
-exports.getReviews = handler.gettAll(Review);
+exports.getReviews = handler.gettAll(Review, "Review");
 
 // @desc    Get specific Review by id
 // @route   GET /api/v1/reviews/:id

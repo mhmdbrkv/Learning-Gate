@@ -25,7 +25,10 @@ const reviewSchema = new mongoose.Schema(
 
 // mongoose query middleware for populating the `user` field
 reviewSchema.pre(/^find/, function (next) {
-  this.populate({ path: "user", select: "firstname" });
+  this.populate({
+    path: "user",
+    select: "firstname lastname profileImage",
+  });
   next();
 });
 

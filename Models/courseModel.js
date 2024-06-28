@@ -57,6 +57,12 @@ const cousreSchema = new mongoose.Schema(
       default: 0,
     },
 
+    usersEnrolled: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
     ratingsNumber: {
       type: Number,
       default: 0,

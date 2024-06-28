@@ -35,6 +35,7 @@ exports.addMyLearning = asyncHandler(async (req, res, next) => {
     { _id: req.params.courseId },
     {
       $inc: { enrolled: 1 },
+      $addToSet: { usersEnrolled: req.user._id },
     }
   );
 
