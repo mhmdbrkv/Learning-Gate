@@ -80,8 +80,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
     token = null;
   }
 
-  console.log(token);
-
   if (!token)
     return next(new ApiError("Not authorized to perform this action.", 401));
 
