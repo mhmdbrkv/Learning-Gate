@@ -13,6 +13,7 @@ const {
 const {
   getReviews,
   getReview,
+  getRandomReviews,
   createReview,
   updateReview,
   deleteReview,
@@ -25,6 +26,7 @@ const authServices = require("../services/authService");
 const router = express.Router({ mergeParams: true });
 
 router.get("/", filter, getReviewsValidator, getReviews);
+router.get("/random", filter, getReviewsValidator, getRandomReviews);
 router.get("/:id", getReviewValidator, getReview);
 
 router.use(authServices.protect, authServices.isActive);

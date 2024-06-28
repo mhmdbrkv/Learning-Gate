@@ -47,6 +47,18 @@ exports.filter = (req, res, next) => {
 // @access  Public
 exports.getReviews = handler.gettAll(Review, "Review");
 
+// @desc    Get random reviews
+// @route   GET /api/v1/reviews/random
+// @access  Public
+exports.getRandomReviews = asyncHandler(async (req, res) => {
+  const numOfDocument = await Review.countDocuments();
+  const reviews = await Review.aggregate([
+    { $sample: { size: numOfDocument } },
+  ]);
+
+  res.status(201).json({ status: true, data: reviews });
+});
+
 // @desc    Get specific Review by id
 // @route   GET /api/v1/reviews/:id
 // @access  Public
