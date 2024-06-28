@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -29,7 +30,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
 
   res.status(201).json({
     status: true,
-    message: "User signed up successfully",
+    message: "User created successfully",
     data,
   });
 });
@@ -52,7 +53,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     status: true,
-    message: "User logged up successfully",
+    message: "User logged in successfully",
     data,
     token,
   });
@@ -61,36 +62,40 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @desc   make sure the user is logged in
 exports.protect = asyncHandler(async (req, res, next) => {
   // 1) check if token exists in request header
-  let Token;
+  let token;
 
-  if (req.cookies && req.cookies.token) {
-    Token = req.cookies.token;
-  } else if (
+  if (
     req.headers &&
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer ")
   ) {
-    Token = req.headers.authorization.split(" ")[1];
-  } else if (req.body && req.body.token) {
-    Token = req.body.token;
-  } else {
-    // Handle the case where no token is found
-    Token = null;
+    token = req.headers.authorization.split(" ")[1];
+  }
+  // Check for token in request body
+  else if (req.body && req.body.token) {
+    token = req.body.token;
+  }
+  // Handle the case where no token is found
+  else {
+    token = null;
   }
 
-  if (!Token)
+  console.log(token);
+
+  if (!token)
     return next(new ApiError("Not authorized to perform this action.", 401));
 
   // 2) verify token (no changes happened, expiration)
   let decoded;
   try {
-    decoded = jwt.verify(Token, process.env.JWT_SECRET_KEY);
+    decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
   } catch (e) {
     throw new ApiError("Something went wrong, Please log in again.", 401);
   }
 
   // 3) check user state
   const user = await User.findById(decoded.userId);
+
   if (!user) {
     throw new ApiError(
       "This account is not authorised. Please log in again.",
