@@ -14,14 +14,6 @@ exports.getUser = asyncHandler(async (req, res) => {
       path: "myCourses",
       select: "title subtitle price enrolled ratingsNumber avgRatings",
     })
-    .populate({
-      path: "myLearning",
-      select: "title subtitle price enrolled ratingsNumber avgRatings",
-    })
-    .populate({
-      path: "wishList",
-      select: "title subtitle price enrolled ratingsNumber avgRatings",
-    })
     .select("-password");
 
   if (!user) {
