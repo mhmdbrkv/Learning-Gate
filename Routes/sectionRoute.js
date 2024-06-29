@@ -5,6 +5,7 @@ const {
   addSectionValidator,
   addlectureValidator,
   removelectureValidator,
+  updatelectureValidator,
 } = require("../utils/validators/sectionValidator");
 
 const {
@@ -13,6 +14,7 @@ const {
   addSection,
   addLecture,
   removeLecture,
+  updateSection,
 } = require("../services/sectionService");
 
 const authServices = require("../services/authService");
@@ -46,5 +48,6 @@ router.delete(
 );
 
 router.post("/:courseId", csrfProtection, addSectionValidator, addSection);
+router.put("/:sectionId", updatelectureValidator, updateSection);
 
 module.exports = router;

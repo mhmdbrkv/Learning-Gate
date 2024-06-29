@@ -77,11 +77,7 @@ exports.addLecture = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.removeLecture = asyncHandler(async (req, res, next) => {
   const section = await Section.findOne({ _id: req.params.sectionId });
-  if (!section) {
-    throw new Error(
-      "No section found for this id or you are not the instructor of this course"
-    );
-  }
+
   let lecture;
 
   section.lectures.forEach((item) => {
@@ -95,11 +91,30 @@ exports.removeLecture = asyncHandler(async (req, res, next) => {
     { _id: req.params.sectionId },
     {
       $pull: { lectures: { _id: req.params.lectureId } },
+      numOfLectures: { $inc: -1 },
     }
   );
 
   res.status(200).json({
     status: true,
     message: "Lecture removed successfully",
+  });
+});
+
+// @desc Update section by sectionId
+// @route   POST /api/v1/sections/:sectionId
+// @access  Private/Instructor
+exports.updateSection = asyncHandler(async (req, res, next) => {
+  const section = await Section.findOneAndUpdate(
+    { _id: req.params.sectionId },
+    {
+      sectionName: req.body.sectionName,
+    }
+  );
+
+  res.status(200).json({
+    status: true,
+    message: "Sections added successfully",
+    data: section,
   });
 });

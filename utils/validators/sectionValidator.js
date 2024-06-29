@@ -47,7 +47,7 @@ exports.addlectureValidator = [
       let course;
 
       if (section) {
-        course = Course.findOne({
+        course = await Course.findOne({
           _id: section.course,
           instructor: req.user._id,
         });
@@ -78,6 +78,27 @@ exports.addlectureValidator = [
   validatorMiddleware,
 ];
 
+exports.updatelectureValidator = [
+  check("sectionId")
+    .notEmpty()
+    .withMessage("section id required")
+    .isMongoId()
+    .withMessage("invalid section id format")
+    .custom(async (value, { req }) => {
+      const section = await Section.findOne({ _id: value });
+
+      if (!section) {
+        throw new Error(
+          "No section found to delete or you are not the instructor of this course"
+        );
+      }
+
+      return true;
+    }),
+
+  validatorMiddleware,
+];
+
 exports.removelectureValidator = [
   check("sectionId")
     .notEmpty()
@@ -86,16 +107,8 @@ exports.removelectureValidator = [
     .withMessage("invalid section id format")
     .custom(async (value, { req }) => {
       const section = await Section.findOne({ _id: value });
-      let course;
 
-      if (section) {
-        course = Course.findOne({
-          _id: section.course,
-          instructor: req.user._id,
-        });
-      }
-
-      if (!course) {
+      if (!section) {
         throw new Error(
           "No section found to delete or you are not the instructor of this course"
         );
