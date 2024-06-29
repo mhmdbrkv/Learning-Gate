@@ -137,6 +137,14 @@ exports.activateLoggedUser = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.deleteLoggedUser = asyncHandler(async (req, res, next) => {
+  await User.findByIdAndDelete(req.user._id);
+  res.status(204).json({
+    status: true,
+    message: "User deleted successfully",
+  });
+});
+
 // @desc    Add courses by interests
 // @route   POST /api/v1/users/interests
 // @access  Public

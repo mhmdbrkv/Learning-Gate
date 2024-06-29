@@ -10,6 +10,7 @@ const {
   getUser,
   changeLoggedUserPassword,
   updateLoggedUserData,
+  deleteLoggedUser,
   deActivateLoggedUser,
   activateLoggedUser,
   setProfileImage,
@@ -55,5 +56,7 @@ router.post(
   updateLoggeedUserDataValidator,
   updateLoggedUserData
 );
+
+router.delete("/remove-me", deleteLoggedUser);
 
 module.exports = router;
