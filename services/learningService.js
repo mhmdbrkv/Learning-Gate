@@ -23,20 +23,21 @@ exports.getMyLearning = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/learning/:courseId
 // @access  Protected/student
 exports.addMyLearning = asyncHandler(async (req, res, next) => {
-  const user = await User.findOneAndUpdate(
-    { _id: req.user._id },
-    {
-      $addToSet: { myLearning: req.params.courseId },
-    },
-    { new: true }
-  );
-
-  await Course.findOneAndUpdate(
+  const course = await Course.findOneAndUpdate(
     { _id: req.params.courseId },
     {
       $inc: { enrolled: 1 },
       $addToSet: { usersEnrolled: req.user._id },
-    }
+    },
+    { new: true }
+  );
+
+  const user = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    {
+      $addToSet: { myLearning: req.params.courseId, interests: course.title },
+    },
+    { new: true }
   );
 
   res.status(200).json({

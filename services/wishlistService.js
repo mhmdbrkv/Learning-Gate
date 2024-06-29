@@ -1,14 +1,17 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../Models/userModel");
+const Course = require("../Models/courseModel");
 
 // @desc    Add course to wishlist
 // @route   POST /api/v1/wishlist/:courseId
 // @access  Protected/user
 exports.addToWishlist = asyncHandler(async (req, res, next) => {
+  const course = await Course.findById(req.params.courseId);
+
   const user = await User.findByIdAndUpdate(
     req.user._id,
     {
-      $addToSet: { wishList: req.params.courseId },
+      $addToSet: { wishList: req.params.courseId, interests: course.title },
     },
     { new: true }
   );
