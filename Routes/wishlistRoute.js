@@ -1,5 +1,4 @@
 const express = require("express");
-const csrfProtection = require("../utils/csrfToken");
 
 const authServices = require("../services/authService");
 
@@ -16,7 +15,7 @@ const {
 } = require("../services/wishlistService");
 
 router.route("/").get(getWishlist);
-router.post("/:courseId", csrfProtection, wishListValidator, addToWishlist);
+router.post("/:courseId", wishListValidator, addToWishlist);
 router.delete("/:courseId", wishListValidator, removeFromWishlist);
 
 module.exports = router;
