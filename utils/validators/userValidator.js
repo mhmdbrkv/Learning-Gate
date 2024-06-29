@@ -5,7 +5,7 @@ const ApiError = require("../apiError");
 const User = require("../../Models/userModel");
 
 exports.changeLoggeedUserPasswordValidator = [
-  check("currentPassword")
+  check("oldPassword")
     .notEmpty()
     .withMessage("user currentPassword required")
 
@@ -22,7 +22,7 @@ exports.changeLoggeedUserPasswordValidator = [
       return true;
     }),
 
-  check("password")
+  check("newPassword")
     .notEmpty()
     .withMessage("user password required")
     .isLength({ min: 6 })

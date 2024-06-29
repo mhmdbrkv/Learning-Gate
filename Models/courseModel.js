@@ -109,6 +109,15 @@ const cousreSchema = new mongoose.Schema(
     sideMeta: {
       type: [String],
     },
+
+    tag: {
+      type: [String],
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["Draft", "Published"],
+    },
   },
 
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
