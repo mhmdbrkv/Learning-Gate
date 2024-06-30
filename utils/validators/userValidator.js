@@ -42,14 +42,14 @@ exports.changeLoggeedUserPasswordValidator = [
 ];
 
 exports.updateLoggeedUserDataValidator = [
-  check("firstname")
+  check("firstName")
     .optional()
     .isString()
     .withMessage("Invalid user firstname format")
     .isLength({ min: 4 })
     .withMessage("user firstname length must be at least 4 characters"),
 
-  check("lastname")
+  check("lastName")
     .optional()
     .isString()
     .withMessage("Invalid user lastname format")
@@ -77,12 +77,6 @@ exports.updateLoggeedUserDataValidator = [
   check("profileImage").optional(),
   check("biography").optional(),
   check("social").optional(),
-
-  check("password")
-    .notEmpty()
-    .withMessage("Password required to confirm the updates ")
-    .isLength({ min: 6 })
-    .withMessage("user password length must be at least 6 characters"),
 
   validatorMiddleware,
 ];

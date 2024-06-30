@@ -4,7 +4,7 @@ const ApiError = require("../apiError");
 const User = require("../../Models/userModel");
 
 exports.createUserValidator = [
-  check("firstname")
+  check("firstName")
     .notEmpty()
     .withMessage("user firstname required")
     .isString()
@@ -12,7 +12,7 @@ exports.createUserValidator = [
     .isLength({ min: 4 })
     .withMessage("user firstname length must be at least 4 characters"),
 
-  check("lastname")
+  check("lastName")
     .optional()
     .isString()
     .withMessage("Invalid user lastname format")
