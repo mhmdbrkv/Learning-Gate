@@ -60,7 +60,7 @@ exports.updateOne = (Model, modelName = "") =>
 
     res
       .status(201)
-      .json({ status: true, message: "Updated successfully", data: document });
+      .json({ success: true, message: "Updated successfully", data: document });
   });
 
 exports.createOne = (Model, modelName = "") =>
@@ -77,7 +77,7 @@ exports.createOne = (Model, modelName = "") =>
     }
 
     res.status(201).json({
-      status: true,
+      success: true,
       message: "Created successfully",
       data: newDocument,
     });
@@ -120,7 +120,7 @@ exports.gettAll = (Model, modelName = "") =>
     const docs = await mongooseQuery;
 
     res.status(200).json({
-      status: true,
+      success: true,
       results: docs.length,
       pagination,
       data: docs,

@@ -48,7 +48,7 @@ exports.getRandomCourses = asyncHandler(async (req, res) => {
     { path: "instructor", select: "firstname lastname profileImage" },
   ]);
 
-  res.status(201).json({ status: true, data: courses });
+  res.status(201).json({ success: true, data: courses });
 });
 // @desc    Get specific course by id
 // @route   GET /api/v1/courses/:id
@@ -65,7 +65,7 @@ exports.getPopularCourses = asyncHandler(async (req, res, next) => {
     .limit(10);
 
   res.status(200).json({
-    status: true,
+    success: true,
     result: courses.length,
     data: courses,
   });
@@ -93,7 +93,7 @@ exports.getCoursesByInterests = asyncHandler(async (req, res) => {
   );
 
   res.status(200).json({
-    status: true,
+    success: true,
     result: courses.length,
     data: courses,
   });
@@ -114,7 +114,7 @@ exports.setThumbnail = asyncHandler(async (req, res) => {
   );
 
   res.status(201).json({
-    status: true,
+    success: true,
     message: "thumbnail has been sat successfully",
   });
 });
@@ -136,7 +136,7 @@ exports.createCourse = asyncHandler(async (req, res) => {
   );
   res
     .status(201)
-    .json({ status: true, message: "Created successfully", data: newCourse });
+    .json({ success: true, message: "Created successfully", data: newCourse });
 });
 
 // @desc    Update specific course

@@ -12,7 +12,7 @@ exports.getMyCourses = asyncHandler(async (req, res, next) => {
     "sections reviews"
   );
   res.status(200).json({
-    status: true,
+    success: true,
     results: courses.length,
     data: courses,
   });
@@ -29,7 +29,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({
-    status: true,
+    success: true,
     data: user,
   });
 });

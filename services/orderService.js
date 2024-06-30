@@ -42,7 +42,7 @@ exports.updateOrderToPaid = asyncHandler(async (req, res, next) => {
 
   const updatedOrder = await order.save();
 
-  res.status(200).json({ status: true, data: updatedOrder });
+  res.status(200).json({ success: true, data: updatedOrder });
 });
 
 // @desc    Get checkout session from stripe and send it as response
@@ -91,7 +91,7 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
     });
 
     res.status(200).json({
-      status: true,
+      success: true,
       message: "Created successfully",
       url: session.url,
     });

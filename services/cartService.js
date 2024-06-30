@@ -45,7 +45,7 @@ exports.addToCart = asyncHandler(async (req, res, next) => {
   await cart.save();
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Course added successfully to your cart",
     data: cart,
   });
@@ -63,7 +63,7 @@ exports.getLoggedUserCart = asyncHandler(async (req, res, next) => {
 
   res
     .status(200)
-    .json({ status: true, items: cart.cartItems.length, data: cart });
+    .json({ success: true, items: cart.cartItems.length, data: cart });
 });
 
 // @desc    Remove specific cart item
@@ -84,7 +84,7 @@ exports.removeCartItem = asyncHandler(async (req, res, next) => {
   }
 
   res.status(204).json({
-    status: true,
+    success: true,
     message: "Item removed successfully from your cart",
   });
 });
@@ -118,7 +118,7 @@ exports.applyCoupon = asyncHandler(async (req, res, next) => {
   await cart.save();
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Coupon applied successfully",
     CartItems: cart.cartItems.length,
     data: cart,

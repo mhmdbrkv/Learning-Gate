@@ -17,7 +17,7 @@ exports.addToWishlist = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Course added successfully to your wishlist",
     data: user.wishList,
   });
@@ -30,7 +30,7 @@ exports.getWishlist = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user._id).populate("wishList");
 
   res.status(200).json({
-    status: true,
+    success: true,
     results: user.wishList.length,
     data: user.wishList,
   });
@@ -49,7 +49,7 @@ exports.removeFromWishlist = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Course removed successfully from your wishlist",
   });
 });

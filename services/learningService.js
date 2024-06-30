@@ -13,7 +13,7 @@ exports.getMyLearning = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({
-    status: true,
+    success: true,
     results: user.myLearning.length,
     data: user.myLearning,
   });
@@ -41,7 +41,7 @@ exports.addMyLearning = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Course added successfully to your learning list",
     results: user.myLearning.length,
     data: user.myLearning,
@@ -65,7 +65,7 @@ exports.removeFromMyLearning = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Course removed successfully from your learning list",
   });
 });

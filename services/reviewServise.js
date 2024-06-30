@@ -61,7 +61,7 @@ exports.getRandomReviews = asyncHandler(async (req, res) => {
     select: "firstname lastname profileImage",
   });
 
-  res.status(201).json({ status: true, data: reviews });
+  res.status(201).json({ success: true, data: reviews });
 });
 
 // @desc    Get specific Review by id
@@ -84,7 +84,7 @@ exports.createReview = asyncHandler(async (req, res) => {
 
   res
     .status(201)
-    .json({ status: true, message: "Created successfully", data: review });
+    .json({ success: true, message: "Created successfully", data: review });
 });
 
 // @desc    Update specific Review

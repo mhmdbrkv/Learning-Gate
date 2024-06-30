@@ -37,7 +37,7 @@ exports.getUser = asyncHandler(async (req, res) => {
 
   data.user = user;
 
-  res.status(200).json({ status: true, data: data });
+  res.status(200).json({ success: true, data: data });
 });
 
 // @desc    Change logged user password
@@ -56,7 +56,7 @@ exports.changeLoggedUserPassword = asyncHandler(async (req, res, next) => {
   );
   generateToken(user._id, res);
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Password changed successfully",
   });
 });
@@ -73,7 +73,7 @@ exports.setProfileImage = asyncHandler(async (req, res, next) => {
   });
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Image uploaded successfully",
   });
 });
@@ -91,7 +91,7 @@ exports.removeProfileImage = asyncHandler(async (req, res, next) => {
   await user.save();
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Image removed successfully",
   });
 });
@@ -110,7 +110,7 @@ exports.updateLoggedUserData = asyncHandler(async (req, res, next) => {
   });
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Updated successfully",
   });
 });
@@ -121,7 +121,7 @@ exports.updateLoggedUserData = asyncHandler(async (req, res, next) => {
 exports.deActivateLoggedUser = asyncHandler(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user._id, { isActive: false });
   res.status(204).json({
-    status: true,
+    success: true,
     message: "User deActivated successfully",
   });
 });
@@ -132,7 +132,7 @@ exports.deActivateLoggedUser = asyncHandler(async (req, res, next) => {
 exports.activateLoggedUser = asyncHandler(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user._id, { isActive: true });
   res.status(200).json({
-    status: true,
+    success: true,
     message: "User activated successfully",
   });
 });
@@ -140,7 +140,7 @@ exports.activateLoggedUser = asyncHandler(async (req, res, next) => {
 exports.deleteLoggedUser = asyncHandler(async (req, res, next) => {
   await User.findByIdAndDelete(req.user._id);
   res.status(204).json({
-    status: true,
+    success: true,
     message: "User deleted successfully",
   });
 });
@@ -157,7 +157,7 @@ exports.addToInterests = asyncHandler(async (req, res, next) => {
     { new: true }
   );
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Added to interests successfully",
     data: user.interests,
   });

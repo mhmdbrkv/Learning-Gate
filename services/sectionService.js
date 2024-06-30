@@ -12,7 +12,7 @@ exports.addSection = asyncHandler(async (req, res, next) => {
   });
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Sections added successfully",
     data: section,
   });
@@ -25,7 +25,7 @@ exports.getSections = asyncHandler(async (req, res, next) => {
   const sections = await Section.find({ course: req.params.courseId });
 
   res.status(200).json({
-    status: true,
+    success: true,
     numOfSections: sections.length,
     data: sections,
   });
@@ -38,7 +38,7 @@ exports.getLectures = asyncHandler(async (req, res, next) => {
   const sections = await Section.find({ _id: req.params.sectionId });
 
   res.status(200).json({
-    status: true,
+    success: true,
     numOfLectures: sections.lectures.length,
     data: sections.lectures,
   });
@@ -65,7 +65,7 @@ exports.addLecture = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Lectures added successfully",
     numOfSections: section.lectures.length,
     data: section.lectures,
@@ -96,7 +96,7 @@ exports.removeLecture = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Lecture removed successfully",
   });
 });
@@ -113,7 +113,7 @@ exports.updateSection = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Sections added successfully",
     data: section,
   });

@@ -29,7 +29,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
   const data = sanitizeUser(user);
 
   res.status(201).json({
-    status: true,
+    success: true,
     message: "User created successfully",
     data,
   });
@@ -52,7 +52,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   const data = sanitizeUser(user);
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "User logged in successfully",
     data,
     token,
@@ -172,7 +172,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: `Email sent successfully to ${user.email}`,
   });
 });
@@ -198,7 +198,7 @@ exports.verifyResetCode = asyncHandler(async (req, res, next) => {
 
   res
     .status(200)
-    .json({ status: true, message: "Password reset code is verified" });
+    .json({ success: true, message: "Password reset code is verified" });
 });
 
 // @desc    Reset password
@@ -222,7 +222,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   const token = generateToken(user);
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "Password has been reseted.",
     token,
   });
