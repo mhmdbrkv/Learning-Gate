@@ -60,6 +60,19 @@ exports.createUserValidator = [
 
   check("social").optional().notEmpty().withMessage("social required"),
 
+  check("accountType")
+    .notEmpty()
+    .withMessage("accountType required")
+    .custom((value) => {
+      const roles = ["student", "instructor"];
+      if (!roles.includes(value)) {
+        throw new ApiError(
+          "accountType should be 'student' or 'instructor'",
+          404
+        );
+      }
+      return true;
+    }),
   validatorMiddleware,
 ];
 

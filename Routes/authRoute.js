@@ -27,8 +27,8 @@ router.post("/create-user", createUserValidator, createUser);
 router.post("/login", loginValidator, login);
 
 router.use(protect);
-router.post("/forgot-password", csrfProtection, forgotPassword);
-router.post("/verify-reset-code", csrfProtection, verifyResetCode);
+router.post("/forgot-password", forgotPassword);
+router.post("/verify-reset-code", verifyResetCode);
 router.post("/reset-password", csrfProtection, resetPassword);
 
 module.exports = router;

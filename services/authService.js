@@ -132,10 +132,8 @@ exports.allowedTo = (...roles) =>
 // @route   POST /api/v1/auth/forgot-password
 // @access  Protected
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
-  // 1) Check user's email
-  const user = await User.findOne({ email: req.body.email });
-  if (!user)
-    throw new ApiError(`No user found with this email: ${req.body.email}`, 404);
+  // 1) Check user
+  const user = req.user;
 
   // 2) Generate a reset code
   const random = Math.floor(100000 + Math.random() * 900000).toString();
@@ -152,7 +150,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     await sendEmail({
       email: user.email,
       subject: `Password reset code (valid for 10 mins)`,
-      message: `Hi ${user.firstname},\nWe sent the code ${random} to reset your password.\n\nThe Golden Gate family`,
+      message: `Hi ${user.firstName},\nWe sent the code ${random} to reset your password.\n\nThe Golden Gate family`,
     });
   } catch (err) {
     user.passResetCode = undefined;
