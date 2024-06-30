@@ -14,16 +14,7 @@ const User = require("../Models/userModel");
 // @access  Public
 exports.createUser = asyncHandler(async (req, res, next) => {
   // Create a new user
-  const user = await User.create({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    password: req.body.password,
-    headline: req.body.headline,
-    biography: req.body.biography,
-    social: req.body.social,
-    role: req.body.role,
-  });
+  const user = await User.create(req.body);
 
   // Sanitizer function to return only nessesary data
   const data = sanitizeUser(user);
@@ -131,7 +122,7 @@ exports.isActive = asyncHandler(async (req, res, next) => {
 // @desc    Authorization (User Permissions)
 exports.allowedTo = (...roles) =>
   asyncHandler(async (req, res, next) => {
-    if (!roles.includes(req.user.role))
+    if (!roles.includes(req.user.accountType))
       throw new ApiError("You are not allowed to perfom this action", 403);
 
     next();
@@ -205,9 +196,7 @@ exports.verifyResetCode = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/auth/reset-password
 // @access  Protected
 exports.resetPassword = asyncHandler(async (req, res, next) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) throw new ApiError("No user found  with this email address.", 404);
-
+  const user = req.user;
   if (!user.passResetCodeVerified)
     throw new ApiError("Please verify your password reset code first.", 400);
 

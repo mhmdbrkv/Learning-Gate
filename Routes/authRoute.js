@@ -10,6 +10,7 @@ const {
 const {
   createUser,
   login,
+  protect,
   forgotPassword,
   verifyResetCode,
   resetPassword,
@@ -25,6 +26,7 @@ router.get("/csrf-token", csrfProtection, (req, res) => {
 router.post("/create-user", createUserValidator, createUser);
 router.post("/login", loginValidator, login);
 
+router.use(protect);
 router.post("/forgot-password", csrfProtection, forgotPassword);
 router.post("/verify-reset-code", csrfProtection, verifyResetCode);
 router.post("/reset-password", csrfProtection, resetPassword);
