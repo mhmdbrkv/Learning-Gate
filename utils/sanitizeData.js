@@ -5,6 +5,6 @@ exports.sanitizeUser = function (user) {
     lastName: user.lastName,
     email: user.email,
     profileImage: user.profileImage,
-    accountType: user.role,
+    accountType: user.accountType,
   };
 };
