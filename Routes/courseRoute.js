@@ -35,7 +35,7 @@ router.use("/:courseId/reviews", reviewRoute);
 router.get("/", getFilter, getCourses);
 router.get("/random", getFilter, getRandomCourses);
 router.get("/popular", getPopularCourses);
-router.get("/interests", getCoursesByInterests);
+router.get("/interests", authServices.protect, getCoursesByInterests);
 
 router.get("/:id", getCousreValidator, getCourse);
 

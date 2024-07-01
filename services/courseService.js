@@ -72,7 +72,7 @@ exports.getPopularCourses = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get courses by interests
-// @route   GET /api/v1/users/interests
+// @route   GET /api/v1/courses/interests
 // @access  Public
 exports.getCoursesByInterests = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
