@@ -28,15 +28,15 @@ exports.changeLoggeedUserPasswordValidator = [
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters long"),
 
-  check("confirmPassword")
-    .notEmpty()
-    .withMessage("user confirmPassword required")
-    .custom(async (val, { req }) => {
-      if (val !== req.body.password) {
-        throw new ApiError("Please enter the exact new password to confirm");
-      }
-      return true;
-    }),
+  // check("confirmPassword")
+  //   .notEmpty()
+  //   .withMessage("user confirmPassword required")
+  //   .custom(async (val, { req }) => {
+  //     if (val !== req.body.password) {
+  //       throw new ApiError("Please enter the exact new password to confirm");
+  //     }
+  //     return true;
+  //   }),
 
   validatorMiddleware,
 ];

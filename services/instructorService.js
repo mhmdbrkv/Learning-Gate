@@ -22,14 +22,30 @@ exports.getMyCourses = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/instructor/:id
 // @access  Protected/instructor
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id)
+    .populate({
+      path: "myCourses",
+      select:
+        "title subtitle price enrolled ratingsNumber thumbnail avgRatings",
+    })
+    .select("-password -myLearning -wishList");
 
   if (!user) {
-    return new ApiError("No Instructor found", 204);
+    throw new ApiError(`No instructor found`, 404);
   }
 
-  res.status(200).json({
-    success: true,
-    data: user,
-  });
+  if (user.accountType === "instructor") {
+    let numberOfStudents = 0;
+    let numberOfReviews = 0;
+
+    user.myCourses.forEach((course) => {
+      numberOfStudents += course.enrolled;
+      numberOfReviews += course.ratingsNumber;
+    });
+
+    user.totalStudents = numberOfStudents;
+    user.totalReviews = numberOfReviews;
+  }
+
+  res.status(200).json({ success: true, data: user });
 });

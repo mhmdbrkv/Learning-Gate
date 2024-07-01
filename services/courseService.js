@@ -131,7 +131,7 @@ exports.createCourse = asyncHandler(async (req, res) => {
 
   const newCourse = await Course.create(req.body);
   await User.findOneAndUpdate(
-    { _id: newCourse.instructor },
+    { _id: req.user._id },
     { $addToSet: { myCourses: newCourse._id } }
   );
   res

@@ -27,7 +27,7 @@ exports.addMyLearning = asyncHandler(async (req, res, next) => {
     { _id: req.params.courseId },
     {
       $inc: { enrolled: 1 },
-      $addToSet: { usersEnrolled: req.user._id },
+      $addToSet: { studentsEnrolled: req.user._id },
     },
     { new: true }
   );
@@ -60,6 +60,7 @@ exports.removeFromMyLearning = asyncHandler(async (req, res, next) => {
     { _id: req.params.courseId },
     {
       $inc: { enrolled: -1 },
+      $pull: { studentsEnrolled: req.user._id },
     },
     { new: true }
   );

@@ -68,6 +68,16 @@ const userSchema = new mongoose.Schema(
       default: "student",
     },
 
+    totalStudents: {
+      type: Number,
+      default: 0,
+    },
+
+    totalReviews: {
+      type: Number,
+      default: 0,
+    },
+
     isActive: { type: Boolean, default: true },
     passChangedAt: Date,
     passResetCode: String,

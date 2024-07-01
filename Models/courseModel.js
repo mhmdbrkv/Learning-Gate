@@ -118,6 +118,12 @@ const cousreSchema = new mongoose.Schema(
       type: String,
       enum: ["Draft", "Published"],
     },
+
+    progressPercentage: {
+      type: Number,
+      enum: [0, 100],
+      default: 0,
+    },
   },
 
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

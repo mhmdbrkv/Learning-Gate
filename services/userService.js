@@ -10,34 +10,23 @@ const { removeFromCloudinary } = require("../Middlewares/cloudinaryMiddleware");
 // @access  Private
 exports.getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
-    .populate({
-      path: "myCourses",
-      select: "title subtitle price enrolled ratingsNumber avgRatings",
-    })
-    .select("-password");
+    .populate([
+      {
+        path: "myLearning",
+        select: "title subtitle price thumbnail avgRatings",
+      },
+      {
+        path: "wishList",
+        select: "title subtitle price thumbnail avgRatings",
+      },
+    ])
+    .select("-password -myCourses");
 
   if (!user) {
-    throw new ApiError(`No document with the id of ${req.params.id}`, 404);
+    throw new ApiError(`No student found}`, 404);
   }
 
-  const data = {};
-
-  if (user.role === "instructor") {
-    let numberOfStudents = 0;
-    let numberOfReviews = 0;
-
-    user.myCourses.forEach((course) => {
-      numberOfStudents += course.enrolled;
-      numberOfReviews += course.ratingsNumber;
-    });
-
-    data.numberOfStudents = numberOfStudents;
-    data.numberOfReviews = numberOfReviews;
-  }
-
-  data.user = user;
-
-  res.status(200).json({ success: true, data: data });
+  res.status(200).json({ success: true, data: user });
 });
 
 // @desc    Change logged user password

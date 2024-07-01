@@ -35,14 +35,14 @@ router.get("/get-me", getUser);
 
 router.post("/interests", addToInterests);
 
-router.use(csrfProtection);
-
-router.post(
+router.put(
   "/my-profile-image",
   uploadImage.single("profileImage"),
   uploadOnCloudinary("users"),
   setProfileImage
 );
+
+router.use(csrfProtection);
 
 router.delete("/my-profile-image", removeProfileImage);
 
