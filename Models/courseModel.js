@@ -57,7 +57,7 @@ const cousreSchema = new mongoose.Schema(
       default: 0,
     },
 
-    usersEnrolled: [
+    studentsEnrolled: [
       {
         type: mongoose.Schema.ObjectId,
         ref: "User",

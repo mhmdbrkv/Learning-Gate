@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 const asyncHandler = require("express-async-handler");
 const Section = require("../Models/sectionModel");
 const { removeFromCloudinary } = require("../Middlewares/cloudinaryMiddleware");
@@ -102,7 +103,7 @@ exports.removeLecture = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Update section by sectionId
-// @route   POST /api/v1/sections/:sectionId
+// @route   PUT /api/v1/sections/:sectionId
 // @access  Private/Instructor
 exports.updateSection = asyncHandler(async (req, res, next) => {
   const section = await Section.findOneAndUpdate(
@@ -116,5 +117,37 @@ exports.updateSection = asyncHandler(async (req, res, next) => {
     success: true,
     message: "Sections added successfully",
     data: section,
+  });
+});
+
+// @desc Update lecture by sectionId and lectureId
+// @route   PUT /api/v1/sections/:sectionId/update-lecture/:lectureId
+// @access  Private/Instructor
+exports.updateLecture = asyncHandler(async (req, res, next) => {
+  const section = await Section.findOne({ _id: req.params.sectionId });
+
+  let lecture;
+
+  const lectures = [...section.lectures];
+
+  const newLectures = lectures.map((item) => {
+    if (item._id.toString() === req.params.lectureId) {
+      lecture = item;
+      return req.body;
+    }
+    return item;
+  });
+
+  if (!lecture) {
+    throw new Error("No lecture found to update");
+  }
+
+  section.lectures = newLectures;
+  await section.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Sections added successfully",
+    data: lecture,
   });
 });

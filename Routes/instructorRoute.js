@@ -9,5 +9,5 @@ router.use(authServices.protect, authServices.allowedTo("instructor"));
 const { getMyCourses, getMe } = require("../services/instructorService");
 
 router.get("/my-courses", getMyCourses);
-router.get("/:id", getMe);
+router.get("/me", getMe);
 module.exports = router;

@@ -78,7 +78,7 @@ exports.addlectureValidator = [
   validatorMiddleware,
 ];
 
-exports.updatelectureValidator = [
+exports.updateSectionValidator = [
   check("sectionId")
     .notEmpty()
     .withMessage("section id required")
@@ -99,7 +99,7 @@ exports.updatelectureValidator = [
   validatorMiddleware,
 ];
 
-exports.removelectureValidator = [
+exports.lectureValidator = [
   check("sectionId")
     .notEmpty()
     .withMessage("section id required")

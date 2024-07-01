@@ -22,7 +22,7 @@ exports.getMyCourses = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/instructor/:id
 // @access  Protected/instructor
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.user._id);
 
   if (!user) {
     return new ApiError("No Instructor found", 204);

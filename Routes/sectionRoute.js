@@ -4,8 +4,8 @@ const csrfProtection = require("../utils/csrfToken");
 const {
   addSectionValidator,
   addlectureValidator,
-  removelectureValidator,
-  updatelectureValidator,
+  lectureValidator,
+  updateSectionValidator,
 } = require("../utils/validators/sectionValidator");
 
 const {
@@ -15,6 +15,7 @@ const {
   addLecture,
   removeLecture,
   updateSection,
+  updateLecture,
 } = require("../services/sectionService");
 
 const authServices = require("../services/authService");
@@ -43,11 +44,17 @@ router.post(
 
 router.delete(
   "/:sectionId/remove-lecture/:lectureId",
-  removelectureValidator,
+  lectureValidator,
   removeLecture
 );
 
+router.put(
+  "/:sectionId/update-lecture/:lectureId",
+  lectureValidator,
+  updateLecture
+);
+
 router.post("/:courseId", csrfProtection, addSectionValidator, addSection);
-router.put("/:sectionId", updatelectureValidator, updateSection);
+router.put("/:sectionId", updateSectionValidator, updateSection);
 
 module.exports = router;
