@@ -54,7 +54,7 @@ exports.changeLoggedUserPassword = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/users/my-profile-image
 // @access  Private
 exports.setProfileImage = asyncHandler(async (req, res, next) => {
-  await User.findByIdAndUpdate(req.user._id, {
+  const user = await User.findByIdAndUpdate(req.user._id, {
     profileImage: {
       url: req.result.secure_url,
       public_id: req.result.public_id,
@@ -64,6 +64,7 @@ exports.setProfileImage = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Image uploaded successfully",
+    data: user,
   });
 });
 
