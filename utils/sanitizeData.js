@@ -7,6 +7,7 @@ exports.sanitizeUser = function (user) {
   data.email = user.email;
   data.profileImage = user.profileImage;
   data.accountType = user.accountType;
+  data.social = user.social;
 
   if (user.accountType === "student") {
     data.myLearning = user.myLearning;
