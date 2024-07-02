@@ -90,13 +90,19 @@ exports.removeProfileImage = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/users/update-my-data
 // @access  Private
 exports.updateLoggedUserData = asyncHandler(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.user._id, {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    headline: req.body.headline,
-    biography: req.body.biography,
-    $addToSet: { social: req.body.social },
-  });
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      headline: req.body.headline,
+      biography: req.body.biography,
+      $addToSet: { social: req.body.social },
+    },
+    {
+      new: true,
+    }
+  );
 
   res.status(200).json({
     success: true,
