@@ -59,7 +59,7 @@ exports.addLecture = asyncHandler(async (req, res, next) => {
           public_id: req.result.public_id,
         },
       },
-      numOfLectures: { $inc: 1 },
+      $inc: { numOfLectures: 1 },
     },
 
     { new: true }
@@ -92,7 +92,7 @@ exports.removeLecture = asyncHandler(async (req, res, next) => {
     { _id: req.params.sectionId },
     {
       $pull: { lectures: { _id: req.params.lectureId } },
-      numOfLectures: { $inc: -1 },
+      $inc: { numOfLectures: -1 },
     }
   );
 
