@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
@@ -86,7 +87,13 @@ exports.createOne = (Model, modelName = "") =>
 exports.getOne = (Model, populateOpt) =>
   asyncHandler(async (req, res) => {
     // 1) Build the query
-    let query = Model.findById(req.params.id);
+    let id;
+    if (req.params.id) {
+      id = req.params.id;
+    } else if (req.body.id) {
+      id = req.body.id;
+    }
+    let query = Model.findById(id);
     if (populateOpt) {
       query = query.populate(populateOpt);
     }

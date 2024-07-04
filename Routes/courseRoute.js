@@ -37,7 +37,7 @@ router.get("/random", getFilter, getRandomCourses);
 router.get("/popular", getPopularCourses);
 router.get("/interests", authServices.protect, getCoursesByInterests);
 
-router.get("/:id", getCousreValidator, getCourse);
+router.get("/get-course", getCousreValidator, getCourse);
 
 router.use(
   authServices.protect,
